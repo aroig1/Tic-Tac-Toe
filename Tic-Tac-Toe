@@ -1,0 +1,180 @@
+import random
+
+gameBoard = [" ", " ", " ", 
+             " ", " ", " ", 
+             " ", " ", " "]
+gameRunning = True
+turn = 'X'
+options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+difficulty = "easy"
+turnCounter = 0
+
+def printBoard():
+    print(gameBoard[0], " | ", gameBoard[1], " | ", gameBoard[2])
+    print("--------------")
+    print(gameBoard[3], " | ", gameBoard[4], " | ", gameBoard[5])
+    print("--------------")
+    print(gameBoard[6], " | ", gameBoard[7], " | ", gameBoard[8])
+
+def modifyBoard(choice):
+    gameBoard[choice - 1] = turn
+
+def checkForWin():
+    # Check for Horizontal
+    if gameBoard[0] == gameBoard[1] == gameBoard[2] and gameBoard[0] != " ":
+        return True
+    elif gameBoard[3] == gameBoard[4] == gameBoard[5] and gameBoard[3] != " ":
+        return True
+    elif gameBoard[6] == gameBoard[7] == gameBoard[8] and gameBoard[6] != " ":
+        return True
+
+    # Check for Vertical
+    elif gameBoard[0] == gameBoard[3] == gameBoard[6] and gameBoard[0] != " ":
+        return True
+    elif gameBoard[1] == gameBoard[4] == gameBoard[7] and gameBoard[1] != " ":
+        return True
+    elif gameBoard[2] == gameBoard[5] == gameBoard[8] and gameBoard[2] != " ":
+        return True
+    
+    # Check for Diagonal
+    elif gameBoard[0] == gameBoard[4] == gameBoard[8] and gameBoard[0] != " ":
+        return True
+    elif gameBoard[2] == gameBoard[4] == gameBoard[6] and gameBoard[2] != " ":
+        return True
+    
+    # No Win
+    else:
+        return False
+
+def checkForTie():
+    if " " not in gameBoard:
+        return True
+    else:
+        return False
+
+def userInput(options):
+    selection = int(input("Select a spot to play (1 - 9): "))
+    while selection not in options:
+        print("The space you chose is already being used")
+        selection = int(input("Select a spot to play (1 - 9): "))
+    options.remove(selection)
+    modifyBoard(selection)
+
+def computerInput(options):
+    print("Computer thinking...")
+
+    # Easy Difficulty AI
+    if difficulty == "easy":
+        selection = random.randint(1, 9)
+        while selection not in options:
+            selection = random.randint(1, 9)
+
+    # Hard Difficulty AI
+    if difficulty == "hard":
+        #middle spot
+        if 5 in options:
+            selection = 5
+        #corner spots for 1st turn
+        elif 1 in options and turnCounter <= 2:
+            selection = 1
+        elif 3 in options and turnCounter <= 2:
+            selection = 3
+        elif 7 in options and turnCounter <= 2:
+            selection = 7
+        elif 9 in options and turnCounter <= 2:
+            selection = 9
+        #potential winning moves(top row)(left to right)
+        elif 1 in options and ((gameBoard[1] == "O" and gameBoard[2] == "O") or (gameBoard[3] == "O" and gameBoard[6] == "O") or (gameBoard[4] == "O" and gameBoard[8] == "O")):
+            selection = 1
+        elif 2 in options and ((gameBoard[0] == "O" and gameBoard[2] == "O") or (gameBoard[4] == "O" and gameBoard[7] == "O")):
+            selection = 2
+        elif 3 in options and ((gameBoard[0] == "O" and gameBoard[1] == "O") or (gameBoard[5] == "O" and gameBoard[8] == "O") or (gameBoard[4] == "O" and gameBoard[6] == "O")):
+            selection = 3
+        #potential winning moves(middle row)(left and right)
+        elif 4 in options and ((gameBoard[4] == "O" and gameBoard[5] == "O") or (gameBoard[0] == "O" and gameBoard[6] == "O")):
+            selection = 4
+        elif 6 in options and ((gameBoard[3] == "O" and gameBoard[4] == "O") or (gameBoard[2] == "O" and gameBoard[8] == "O")):
+            selection = 6
+        #potential winning moves(bottom row)(left to right)
+        elif 7 in options and ((gameBoard[7] == "O" and gameBoard[8] == "O") or (gameBoard[0] == "O" and gameBoard[3] == "O") or (gameBoard[4] == "O" and gameBoard[2] == "O")):
+            selection = 7
+        elif 8 in options and ((gameBoard[6] == "O" and gameBoard[8] == "O") or (gameBoard[4] == "O" and gameBoard[1] == "O")):
+            selection = 8
+        elif 9 in options and ((gameBoard[6] == "O" and gameBoard[7] == "O") or (gameBoard[2] == "O" and gameBoard[5] == "O") or (gameBoard[4] == "O" and gameBoard[0] == "O")):
+            selection = 9
+        #corner blocks
+        elif 1 in options and ((gameBoard[1] == "X" and gameBoard[2] == "X") or (gameBoard[3] == "X" and gameBoard[6] == "X") or (gameBoard[4] == "X" and gameBoard[8] == "X")):
+            selection = 1
+        elif 3 in options and ((gameBoard[0] == "X" and gameBoard[1] == "X") or (gameBoard[5] == "X" and gameBoard[8] == "X") or (gameBoard[4] == "X" and gameBoard[6] == "X")):
+            selection = 3
+        elif 7 in options and ((gameBoard[0] == "X" and gameBoard[3] == "X") or (gameBoard[7] == "X" and gameBoard[8] == "X") or (gameBoard[4] == "X" and gameBoard[2] == "X")):
+            selection = 7
+        elif 9 in options and ((gameBoard[2] == "X" and gameBoard[5] == "X") or (gameBoard[6] == "X" and gameBoard[7] == "X") or (gameBoard[4] == "X" and gameBoard[0] == "X")):
+            selection = 9
+        #middle edge spots for 2nd turn when AI has middle spot
+        elif 2 in options and gameBoard[4] == "O" and (gameBoard[0] == "X" and gameBoard[2] == "X"):
+            selection = 2
+        elif 4 in options and gameBoard[4] == "O" and (gameBoard[0] == "X" and gameBoard[6] == "X"):
+            selection = 4
+        elif 6 in options and gameBoard[4] == "O" and (gameBoard[2] == "X" and gameBoard[8] == "X"):
+            selection = 6
+        elif 8 in options and gameBoard[4] == "O" and (gameBoard[6] == "X" and gameBoard[8] == "X"):
+            selection = 8
+        elif 2 in options and gameBoard[4] == "O" and gameBoard[0] == "X" and gameBoard[8] == "X":
+            selection = 2
+        elif 2 in options and gameBoard[4] == "O" and gameBoard[2] == "X" and gameBoard[6] == "X":
+            selection = 2
+        #middle edge spots for 2nd turn when AI has corner spot
+        elif 2 in options and (gameBoard[0] == "O" or gameBoard[2] == "O") and (gameBoard[0] != "X" and gameBoard[2] != "X"):
+            selection = 2
+        elif 4 in options and (gameBoard[0] == "O" or gameBoard[6] == "O") and (gameBoard[0] != "X" and gameBoard[6] != "X"):
+            selection = 4
+        elif 6 in options and (gameBoard[2] == "O" or gameBoard[8] == "O") and (gameBoard[2] != "X" and gameBoard[8] != "X"):
+            selection = 6
+        elif 8 in options and (gameBoard[6] == "O" or gameBoard[8] == "O") and (gameBoard[6] != "X" and gameBoard[8] != "X"):
+            selection = 8
+        #RANDOM (temporary) (MODIFY??)
+        else:
+            selection = random.randint(1, 9)
+            while selection not in options:
+                selection = random.randint(1, 9)
+
+    modifyBoard(selection)
+    options.remove(selection)
+    print("\n") 
+        
+
+if __name__ == '__main__':
+
+    keepPlaying = "yes"
+    difficulty = input("Choose your difficulty? (easy, hard): ")
+
+    while (keepPlaying == "yes"):
+        gameBoard = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
+        options = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        turnCounter = 0
+
+        while gameRunning:
+            printBoard()
+            if turnCounter % 2 == 0:
+                turn = "X"
+                userInput(options)
+            else:
+                turn = "O"
+                computerInput(options)
+            if checkForWin() and turn == "X":
+                printBoard()
+                print("YOU WON!!!")
+                break
+            elif checkForWin() and turn == "O":
+                printBoard()
+                print("YOU SUCK.")
+                break
+            elif checkForTie():
+                printBoard()
+                print("YOU TIED")
+                break
+            turnCounter += 1
+        
+        keepPlaying = input("\nDo you want to play again? (yes/no): ")
+    print("\nGoodbye\n")
