@@ -8,7 +8,6 @@ class TicTacToe:
 
         self.difficulty = "hard"
         self.turnCounter = 0
-        self.keepPlaying = "yes"
 
     def checkForWin(self):
         for x in range(3):
@@ -101,7 +100,7 @@ class TicTacToe:
                 selY = 2
             elif self.GUI.gameBoard[2][0] == -1 and ((self.GUI.gameBoard[0][0] == "X" and self.GUI.gameBoard[1][0] == "X") or (self.GUI.gameBoard[2][1] == "X" and self.GUI.gameBoard[2][2] == "X") or (self.GUI.gameBoard[1][1] == "X" and self.GUI.gameBoard[0][2] == "X")):
                 selX = 2
-                selY = 2
+                selY = 0
             elif self.GUI.gameBoard[2][2]  == -1 and ((self.GUI.gameBoard[0][2] == "X" and self.GUI.gameBoard[1][2] == "X") or (self.GUI.gameBoard[2][0] == "X" and self.GUI.gameBoard[2][1] == "X") or (self.GUI.gameBoard[1][1] == "X" and self.GUI.gameBoard[0][0] == "X")):
                 selX = 2
                 selY = 2
@@ -123,7 +122,7 @@ class TicTacToe:
                 selY = 1
             elif self.GUI.gameBoard[0][1] == -1 and self.GUI.gameBoard[1][1] == "O" and self.GUI.gameBoard[0][2] == "X" and self.GUI.gameBoard[2][0] == "X":
                 selX = 0
-                selY = 0
+                selY = 1
             #middle edge spots for 2nd turn when AI has corner spot
             elif self.GUI.gameBoard[0][1] == -1 and (self.GUI.gameBoard[0][0] == "O" or self.GUI.gameBoard[0][2] == "O") and (self.GUI.gameBoard[0][0] != "X" and self.GUI.gameBoard[0][2] != "X"):
                 selX = 0
@@ -148,24 +147,20 @@ class TicTacToe:
         self.GUI.takeTurn(selX, selY)
 
     def runGame(self):
-
         #self.difficulty = input("Choose your difficulty? (easy, hard): ")
-        while (self.keepPlaying == "yes"):
-            self.GUI.gameRunning = True
 
+        while (True):
+            
             while self.GUI.gameRunning:
                 self.GUI.updateGUI()
                 if self.checkForWin() and self.GUI.turn == "X":
                     self.GUI.message.configure(text="YOU WON!!!")
-                    print("YOU WON!!!")
                     self.GUI.gameRunning = False
                 elif self.checkForWin() and self.GUI.turn == "O":
                     self.GUI.message.configure(text="YOU SUCK!!!")
-                    print("YOU SUCK.")
                     self.GUI.gameRunning = False
                 elif self.checkForTie():
                     self.GUI.message.configure(text="YOU TIED!!!")
-                    print("YOU TIED")
                     self.GUI.gameRunning = False
                 elif self.GUI.turnCounter % 2 == 0:
                     self.GUI.turn = "X"
@@ -173,10 +168,9 @@ class TicTacToe:
                     self.GUI.turn = "O"
                     self.computerInput()
             
+            self.GUI.ShowPlayAgainButton()
             self.GUI.updateGUI()
-            self.keepPlaying = input("\nDo you want to play again? (yes/no): ")
-        print("\nGoodbye\n")
-
+           
 if __name__ == '__main__':
     game = TicTacToe()
     game.runGame()
