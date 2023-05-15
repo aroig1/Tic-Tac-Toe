@@ -9,6 +9,7 @@ class gameGUI:
         self.gameBoard = [[-1, -1, -1], [-1, -1, -1], [-1, -1, -1]]
         self.turn = "X"
         self.turnCounter = 0
+        self.gameRunning = True
 
         # Window
         self.root.geometry("600x700")
@@ -52,10 +53,11 @@ class gameGUI:
         pass
 
     def takeTurn(self, row, col):
-        if self.gameBoard[row][col] == -1:
-            self.btn[row][col]['text'] = self.turn
-            self.gameBoard[row][col] = self.turn
-            self.message.configure(text="")
-            self.turnCounter += 1
-        else:
-            self.message.configure(text="The space you chose is already being used")
+        if self.gameRunning:
+            if self.gameBoard[row][col] == -1:
+                self.btn[row][col]['text'] = self.turn
+                self.gameBoard[row][col] = self.turn
+                self.message.configure(text="")
+                self.turnCounter += 1
+            else:
+                self.message.configure(text="The space you chose is already being used")

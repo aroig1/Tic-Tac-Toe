@@ -130,29 +130,29 @@ class TicTacToe:
 
         #self.difficulty = input("Choose your difficulty? (easy, hard): ")
         while (self.keepPlaying == "yes"):
-            gameRunning = True
+            self.GUI.gameRunning = True
 
-            while gameRunning:
+            while self.GUI.gameRunning:
                 self.GUI.updateGUI()
-                print(self.GUI.turnCounter, self.GUI.turn)
-                if self.GUI.turnCounter % 2 == 0:
-                    self.GUI.turn = "X"
-                else:
-                    self.GUI.turn = "O"
-                    self.computerInput()
+                print(self.GUI.turnCounter, self.GUI.turn) ## DELETE
                 if self.checkForWin() and self.GUI.turn == "X":
                     self.GUI.message.configure(text="YOU WON!!!")
                     print("YOU WON!!!")
-                    gameRunning = False
+                    self.GUI.gameRunning = False
                 elif self.checkForWin() and self.GUI.turn == "O":
                     print(self.GUI.gameBoard)
                     self.GUI.message.configure(text="YOU SUCK!!!")
                     print("YOU SUCK.")
-                    gameRunning = False
+                    self.GUI.gameRunning = False
                 elif self.checkForTie():
                     self.GUI.message.configure(text="YOU TIED!!!")
                     print("YOU TIED")
-                    gameRunning = False
+                    self.GUI.gameRunning = False
+                elif self.GUI.turnCounter % 2 == 0:
+                    self.GUI.turn = "X"
+                else:
+                    self.GUI.turn = "O"
+                    self.computerInput()
             
             self.GUI.updateGUI()
             self.keepPlaying = input("\nDo you want to play again? (yes/no): ")
