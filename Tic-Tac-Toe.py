@@ -101,6 +101,20 @@ class TicTacToe:
             elif self.GUI.gameBoard[2][2]  == -1 and ((self.GUI.gameBoard[0][2] == "X" and self.GUI.gameBoard[1][2] == "X") or (self.GUI.gameBoard[2][0] == "X" and self.GUI.gameBoard[2][1] == "X") or (self.GUI.gameBoard[1][1] == "X" and self.GUI.gameBoard[0][0] == "X")):
                 selX = 2
                 selY = 2
+            #middle edge blocks
+            elif self.GUI.gameBoard[2][1] == -1 and self.GUI.gameBoard[0][1] == self.GUI.gameBoard[1][1] == "X":
+                selX = 2
+                selY = 1
+            elif self.GUI.gameBoard[1][0] == -1 and self.GUI.gameBoard[1][2] == self.GUI.gameBoard[1][1] == "X":
+                selX = 1
+                selY = 0
+            elif self.GUI.gameBoard[0][1] == -1 and self.GUI.gameBoard[2][1] == self.GUI.gameBoard[1][1] == "X":
+                selX = 0
+                selY = 1
+            elif self.GUI.gameBoard[1][2] == -1 and self.GUI.gameBoard[1][0] == self.GUI.gameBoard[1][1] == "X":
+                selX = 1
+                selY = 2
+
             #middle edge spots for 2nd turn when AI has middle spot
             elif self.GUI.gameBoard[0][1]  == -1 and self.GUI.gameBoard[1][1] == "O" and (self.GUI.gameBoard[0][0] == "X" and self.GUI.gameBoard[0][2] == "X"):
                 selX = 0
@@ -120,6 +134,7 @@ class TicTacToe:
             elif self.GUI.gameBoard[0][1] == -1 and self.GUI.gameBoard[1][1] == "O" and self.GUI.gameBoard[0][2] == "X" and self.GUI.gameBoard[2][0] == "X":
                 selX = 0
                 selY = 1
+                
             #middle edge spots for 2nd turn when AI has corner spot
             elif self.GUI.gameBoard[0][1] == -1 and (self.GUI.gameBoard[0][0] == "O" or self.GUI.gameBoard[0][2] == "O") and (self.GUI.gameBoard[0][0] != "X" and self.GUI.gameBoard[0][2] != "X"):
                 selX = 0
