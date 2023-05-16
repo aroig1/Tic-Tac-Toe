@@ -144,20 +144,20 @@ class TicTacToe:
         self.GUI.takeTurn(selX, selY)
 
     def runGame(self):
-        #self.difficulty = input("Choose your difficulty? (easy, hard): ")
         self.GUI.PickDifficulty()
         self.GUI.updateGUI()
         
-        while (True):
+        while (self.GUI.gameOpen):
             if self.GUI.difficultyChosen:
                 break
             self.GUI.updateGUI()
 
-        self.GUI.ShowGame()
+        if self.GUI.gameOpen:
+            self.GUI.ShowGame()
 
         while (self.GUI.gameOpen):
             
-            while self.GUI.gameRunning:
+            while self.GUI.gameRunning and self.GUI.gameOpen:
                 self.GUI.updateGUI()
                 if self.checkForWin() and self.GUI.turn == "X":
                     self.GUI.message.configure(text="YOU WON!!!")
@@ -174,8 +174,9 @@ class TicTacToe:
                     self.GUI.turn = "O"
                     self.computerInput()
             
-            self.GUI.ShowPlayAgainButton()
-            self.GUI.updateGUI()
+            if self.GUI.gameOpen:
+                self.GUI.ShowPlayAgainButton()
+                self.GUI.updateGUI()
            
 if __name__ == '__main__':
     game = TicTacToe()

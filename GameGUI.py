@@ -61,6 +61,7 @@ class gameGUI:
         self.hardBtn = tk.Button(self.root, text="Hard Mode", font=('Arial', 20), command=self.HardMode)
         self.hardBtn.pack_forget()
 
+        # Close Window
         self.root.protocol("WM_DELETE_WINDOW", self.ExitGame)
 
     
