@@ -10,6 +10,9 @@ class gameGUI:
         self.turn = "X"
         self.turnCounter = 0
         self.gameRunning = True
+        self.difficulty = "hard"
+        self.difficultyChosen = False
+        self.gameOpen = True
 
         # Window
         self.root.geometry("600x700")
@@ -50,15 +53,19 @@ class gameGUI:
         self.exitBtn = tk.Button(self.root, text="Exit Game", font=('Arial', 20), command=self.ExitGame)
         self.exitBtn.pack_forget()
 
-        self.root.protocol("WM_DELETE_WINDOW", self.root.destroy)
+        # Selecting Difficulty Label + Buttons
+        self.difficultyLabel = tk.Label(self.root, text="Choose your difficulty:", font=('Arial', 20), background="light blue")
+        self.difficultyLabel.pack_forget()
+        self.easyBtn = tk.Button(self.root, text="Easy Mode", font=('Arial', 20), command=self.EasyMode)
+        self.easyBtn.pack_forget()
+        self.hardBtn = tk.Button(self.root, text="Hard Mode", font=('Arial', 20), command=self.HardMode)
+        self.hardBtn.pack_forget()
 
-        #self.root.mainloop()
-        #self.root.update()
+        self.root.protocol("WM_DELETE_WINDOW", self.ExitGame)
 
     
     def updateGUI(self):
         self.root.update()
-        pass
 
     def takeTurn(self, row, col):
         if self.gameRunning:
@@ -86,3 +93,28 @@ class gameGUI:
 
     def ExitGame(self):
         self.root.destroy()
+        self.gameOpen = False
+
+    def PickDifficulty(self):
+        self.gameFrame.pack_forget()
+        self.turnLabel.pack_forget()
+        self.message.pack_forget()
+        self.difficultyLabel.pack(pady=20)
+        self.easyBtn.pack(pady=20)
+        self.hardBtn.pack(pady=20)
+
+    def EasyMode(self):
+        self.difficulty = "easy"
+        self.difficultyChosen = True
+
+    def HardMode(self):
+        self.difficulty = "hard"
+        self.difficultyChosen = True
+    
+    def ShowGame(self):
+        self.difficultyLabel.pack_forget()
+        self.easyBtn.pack_forget()
+        self.hardBtn.pack_forget()
+        self.gameFrame.pack(padx=20, pady=30, fill='x')
+        self.turnLabel.pack(pady=10)
+        self.message.pack(pady=10)

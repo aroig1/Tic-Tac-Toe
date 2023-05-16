@@ -6,9 +6,6 @@ class TicTacToe:
 
         self.GUI = gameGUI()
 
-        self.difficulty = "hard"
-        self.turnCounter = 0
-
     def checkForWin(self):
         for x in range(3):
             # Check for Horizontal
@@ -38,7 +35,7 @@ class TicTacToe:
     def computerInput(self):
 
         # Easy Difficulty AI
-        if self.difficulty == "easy":
+        if self.GUI.difficulty == "easy":
             selX = random.randint(0, 2)
             selY = random.randint(0, 2)
             while self.GUI.gameBoard[selX][selY] != -1:
@@ -46,7 +43,7 @@ class TicTacToe:
                 selY = random.randint(0, 2)
         
         # Hard Difficulty AI
-        if self.difficulty == "hard":
+        if self.GUI.difficulty == "hard":
             #middle spot
             if self.GUI.gameBoard[1][1] == -1:
                 selX = 1
@@ -148,8 +145,17 @@ class TicTacToe:
 
     def runGame(self):
         #self.difficulty = input("Choose your difficulty? (easy, hard): ")
-
+        self.GUI.PickDifficulty()
+        self.GUI.updateGUI()
+        
         while (True):
+            if self.GUI.difficultyChosen:
+                break
+            self.GUI.updateGUI()
+
+        self.GUI.ShowGame()
+
+        while (self.GUI.gameOpen):
             
             while self.GUI.gameRunning:
                 self.GUI.updateGUI()
