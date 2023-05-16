@@ -13,6 +13,9 @@ class gameGUI:
         self.difficulty = "hard"
         self.difficultyChosen = False
         self.gameOpen = True
+        self.wins = 0
+        self.losses = 0
+        self.ties = 0
 
         # Window
         self.root.geometry("600x700")
@@ -22,6 +25,9 @@ class gameGUI:
         # Game Title
         self.label = tk.Label(self.root, text="Tic-Tac-Toe", font=('Arial', 40), background="light blue")
         self.label.pack(pady=30)
+
+        # Win - Losses - Ties
+        self.score = tk.Label(self.root, text="Wins: " + str(self.wins) + "   Losses: " + str(self.losses) + "   Ties: " + str(self.ties), font=('Arial', 15), background="light blue")
 
         #Button Frame
         self.gameFrame = tk.Frame(self.root, background="Black", borderwidth=2)
@@ -79,6 +85,7 @@ class gameGUI:
                 self.message.configure(text="The space you chose is already being used")
 
     def ShowPlayAgainButton(self):
+        self.score.configure(text="Wins: " + str(self.wins) + "   Losses: " + str(self.losses) + "   Ties: " + str(self.ties))
         self.playAgainBtn.pack(pady=20)
         self.exitBtn.pack(pady=10)
 
@@ -116,6 +123,7 @@ class gameGUI:
         self.difficultyLabel.pack_forget()
         self.easyBtn.pack_forget()
         self.hardBtn.pack_forget()
+        self.score.place(x=165, y=120)
         self.gameFrame.pack(padx=20, pady=30, fill='x')
         self.turnLabel.pack(pady=10)
         self.message.pack(pady=10)

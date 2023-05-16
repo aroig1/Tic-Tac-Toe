@@ -161,12 +161,15 @@ class TicTacToe:
                 self.GUI.updateGUI()
                 if self.checkForWin() and self.GUI.turn == "X":
                     self.GUI.message.configure(text="YOU WON!!!")
+                    self.GUI.wins += 1
                     self.GUI.gameRunning = False
                 elif self.checkForWin() and self.GUI.turn == "O":
                     self.GUI.message.configure(text="YOU SUCK!!!")
+                    self.GUI.losses += 1
                     self.GUI.gameRunning = False
                 elif self.checkForTie():
                     self.GUI.message.configure(text="YOU TIED!!!")
+                    self.GUI.ties += 1
                     self.GUI.gameRunning = False
                 elif self.GUI.turnCounter % 2 == 0:
                     self.GUI.turn = "X"
