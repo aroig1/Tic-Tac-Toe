@@ -62,10 +62,15 @@ class gameGUI:
         # Selecting Difficulty Label + Buttons
         self.difficultyLabel = tk.Label(self.root, text="Choose your difficulty:", font=('Arial', 20), background="light blue")
         self.difficultyLabel.pack_forget()
+        # Easy Mode Button
         self.easyBtn = tk.Button(self.root, text="Easy Mode", font=('Arial', 20), command=self.EasyMode)
         self.easyBtn.pack_forget()
+        # Hard Mode Button
         self.hardBtn = tk.Button(self.root, text="Hard Mode", font=('Arial', 20), command=self.HardMode)
         self.hardBtn.pack_forget()
+        # AI Mode Button
+        self.aiBtn = tk.Button(self.root, text="ChatGPT AI Mode", font=('Arial', 20), command=self.aiMode)
+        self.aiBtn.pack_forget()
 
         # Close Window
         self.root.protocol("WM_DELETE_WINDOW", self.ExitGame)
@@ -110,6 +115,7 @@ class gameGUI:
         self.difficultyLabel.pack(pady=20)
         self.easyBtn.pack(pady=20)
         self.hardBtn.pack(pady=20)
+        self.aiBtn.pack(pady=20)
 
     def EasyMode(self):
         self.difficulty = "easy"
@@ -118,11 +124,16 @@ class gameGUI:
     def HardMode(self):
         self.difficulty = "hard"
         self.difficultyChosen = True
+
+    def aiMode(self):
+        self.difficulty = "ai"
+        self.difficultyChosen = True
     
     def ShowGame(self):
         self.difficultyLabel.pack_forget()
         self.easyBtn.pack_forget()
         self.hardBtn.pack_forget()
+        self.aiBtn.pack_forget()
         self.score.place(x=165, y=120)
         self.gameFrame.pack(padx=20, pady=30, fill='x')
         self.turnLabel.pack(pady=10)

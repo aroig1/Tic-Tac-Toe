@@ -1,4 +1,6 @@
 import random
+import os
+import openai
 from GameGUI import gameGUI
 
 class TicTacToe:
@@ -156,6 +158,29 @@ class TicTacToe:
                     selX = random.randint(0, 2)
                     selY = random.randint(0, 2)
         
+        # ChatGPT AI Difficulty
+        if self.GUI.difficulty == "ai":
+            openai.api_key = "API_KEY"
+
+            # Call to ChatGPT API for response, inputting gameBoard
+            completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "You are my tic tac toe opponent."},
+                {"role": "user", "content": f"This is a tic tac toe game board {self.GUI.gameBoard}. Reply with only the coordinates of your turn in the 2D list, no other text. Ex: [0,0] would be the top left corner. You are O's and I am X's. -1 represents an empty space."}
+            ],
+            temperature=0.8
+            )
+
+            turn = completion.choices[0].message.content
+
+            # Remove spaces or any words from ChatGPT's response
+            turn = ''.join(c for c in turn if not c.isalpha())
+            turn = ''.join(c for c in turn if not c == ' ')
+
+            selX = int(turn[1])
+            selY = int(turn[3])
+            
         self.GUI.takeTurn(selX, selY)
 
     def runGame(self):
